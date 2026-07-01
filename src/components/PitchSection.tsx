@@ -740,7 +740,7 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
                   <div className="mt-4 pt-3 border-t border-border/60 flex items-center gap-3">
                     <div className="w-9 h-9 rounded-full overflow-hidden border border-accent/40 shrink-0">
                       <img 
-                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=150&h=150&q=80"
+                        src="https://images.unsplash.com/photo-1529111290557-82f6d5c6cf85?auto=format&fit=crop&w=150&h=150&q=80"
                         alt="Mr. Walizen - Lead Web Developer"
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover"
