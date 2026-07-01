@@ -5,7 +5,11 @@
 
 import { Instagram, Compass, ExternalLink } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  lang: 'en' | 'th';
+}
+
+export default function Footer({ lang }: FooterProps) {
   return (
     <footer className="bg-background border-t border-border py-16 px-6 font-sans text-xs text-muted-foreground" id="footer">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
@@ -21,10 +25,10 @@ export default function Footer() {
             className="font-serif text-3xl italic font-bold text-accent tracking-wide hover:opacity-90 transition-opacity inline-block"
             id="footer-logo"
           >
-            The Aldwick
+            SK Hotel
           </a>
           <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60">
-            Cotswolds Luxury Boutique Hotel & Dining
+            {lang === 'en' ? 'Trat Town Riverside Guesthouse & Tours' : 'เกสท์เฮ้าส์ริมแม่น้ำและเรือนำเที่ยวชุมชนเมืองตราด'}
           </p>
         </div>
 
@@ -67,10 +71,12 @@ export default function Footer() {
         {/* Right: Copyright & Location details */}
         <div className="text-center md:text-right max-w-sm space-y-2 leading-relaxed">
           <p className="text-muted-foreground/80">
-            © 2026 The Aldwick · Boutique Hotel & Restaurant
+            {lang === 'en' ? '© 2026 SK Hotel · Riverside Guesthouse & Tours' : '© 2026 SK Hotel · บริการห้องพักริมคลองนำเที่ยวตราด'}
           </p>
           <p className="text-[10px] text-muted-foreground/50">
-            Bourton-on-the-Water, Cotswolds GL54 · +44 1451 123 456
+            {lang === 'en' 
+              ? 'Thoncharoen Canal, Trat Town, Thailand · +66 81 234 5678'
+              : 'ชุมชนริมคลองธนเจริญ อำเภอเมืองตราด ประเทศไทย · +66 81 234 5678'}
           </p>
         </div>
 

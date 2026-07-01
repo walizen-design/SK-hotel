@@ -4,13 +4,14 @@
  */
 
 import { useState, FormEvent } from 'react';
-import { Calendar, Users } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 interface BookCTAProps {
+  lang: 'en' | 'th';
   onOpenBookingWithDates: (dates: { checkIn: string; checkOut: string }) => void;
 }
 
-export default function BookCTA({ onOpenBookingWithDates }: BookCTAProps) {
+export default function BookCTA({ lang, onOpenBookingWithDates }: BookCTAProps) {
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
 
@@ -31,12 +32,16 @@ export default function BookCTA({ onOpenBookingWithDates }: BookCTAProps) {
 
       <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
         <div className="space-y-3">
-          <span className="font-sans font-semibold text-xs tracking-[0.2em] uppercase text-black/60 block">Reservations Desk</span>
+          <span className="font-sans font-semibold text-xs tracking-[0.2em] uppercase text-black/60 block">
+            {lang === 'en' ? 'Reservations Desk' : 'ฝ่ายบริการจองห้องพัก'}
+          </span>
           <h2 className="font-serif text-4xl md:text-5xl italic font-bold leading-tight">
-            Is Your Date Available?
+            {lang === 'en' ? 'Is Your Date Available?' : 'ห้องพักพร้อมให้บริการในวันที่ท่านต้องการหรือไม่?'}
           </h2>
           <p className="font-sans font-light text-sm md:text-base text-black/80 max-w-xl mx-auto leading-relaxed">
-            We take a limited number of bookings each month — check availability and reserve your room directly for our best rate.
+            {lang === 'en'
+              ? 'We take a limited number of bookings each month — check availability and reserve your room directly for our best rate.'
+              : 'ห้องพักริมคลองยอดนิยมได้รับการสำรองอย่างรวดเร็ว — กรุณาเลือกวันและเข้าตรวจสอบสถานะห้องว่างพร้อมจองตรงราคาสุดพิเศษ'}
           </p>
         </div>
 
@@ -49,7 +54,9 @@ export default function BookCTA({ onOpenBookingWithDates }: BookCTAProps) {
           <div className="flex items-center gap-3 px-3 py-2 border-b md:border-b-0 md:border-r border-black/10 text-left">
             <Calendar className="w-4 h-4 text-black/60 shrink-0" />
             <div className="w-full">
-              <label className="block text-[8px] uppercase tracking-wider text-black/50 font-semibold">Arriving</label>
+              <label className="block text-[8px] uppercase tracking-wider text-black/50 font-semibold">
+                {lang === 'en' ? 'Arriving' : 'วันเข้าพัก'}
+              </label>
               <input
                 type="date"
                 value={checkIn}
@@ -64,7 +71,9 @@ export default function BookCTA({ onOpenBookingWithDates }: BookCTAProps) {
           <div className="flex items-center gap-3 px-3 py-2 border-b md:border-b-0 md:border-r border-black/10 text-left">
             <Calendar className="w-4 h-4 text-black/60 shrink-0" />
             <div className="w-full">
-              <label className="block text-[8px] uppercase tracking-wider text-black/50 font-semibold">Departing</label>
+              <label className="block text-[8px] uppercase tracking-wider text-black/50 font-semibold">
+                {lang === 'en' ? 'Departing' : 'วันเช็คเอาท์'}
+              </label>
               <input
                 type="date"
                 value={checkOut}
@@ -81,14 +90,16 @@ export default function BookCTA({ onOpenBookingWithDates }: BookCTAProps) {
             className="w-full bg-[#13181f] text-[#e9e5db] hover:bg-[#1d242e] transition-colors py-3.5 px-6 font-sans font-semibold text-xs uppercase tracking-widest"
             id="cta-check-btn"
           >
-            Check Availability
+            {lang === 'en' ? 'Check Availability' : 'ตรวจสอบสถานะห้องว่าง'}
           </button>
         </form>
 
         {/* Small details line */}
         <div className="pt-2">
           <p className="font-sans text-xs font-medium text-black/70 tracking-widest uppercase">
-            Best rate direct · Dog friendly · Free parking
+            {lang === 'en' 
+              ? 'Best rate direct · Pet friendly · Free parking'
+              : 'ราคาตรงดีที่สุด · ยินดีต้อนรับสัตว์เลี้ยง · บริการที่จอดรถฟรี'}
           </p>
         </div>
       </div>

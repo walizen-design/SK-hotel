@@ -7,7 +7,11 @@ import { motion } from 'motion/react';
 import { Star } from 'lucide-react';
 import { TESTIMONIALS } from '../data';
 
-export default function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  lang: 'en' | 'th';
+}
+
+export default function TestimonialsSection({ lang }: TestimonialsSectionProps) {
   const containerVariants = {
     hidden: {},
     visible: {
@@ -31,9 +35,11 @@ export default function TestimonialsSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-16 text-center">
-          <span className="label-caps text-accent mb-2 block">Guest Chronicles</span>
+          <span className="label-caps text-accent mb-2 block">
+            {lang === 'en' ? 'Guest Chronicles' : 'เสียงจากผู้เข้าพักจริง'}
+          </span>
           <h2 className="font-serif text-4xl md:text-5xl italic font-bold text-foreground inline-block relative pb-4">
-            Guest Testimonials
+            {lang === 'en' ? 'Guest Testimonials' : 'ความประทับใจของลูกค้า'}
             <motion.span
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
@@ -53,34 +59,39 @@ export default function TestimonialsSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
           id="testimonials-grid"
         >
-          {TESTIMONIALS.map((t) => (
-            <motion.div
-              key={t.id}
-              variants={cardVariants}
-              className="bg-surface border border-border p-8 flex flex-col justify-between space-y-8"
-              id={`testimonial-card-${t.id}`}
-            >
-              {/* Star Rating Row */}
-              <div className="flex items-center space-x-1">
-                {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
-                ))}
-              </div>
+          {TESTIMONIALS.map((t) => {
+            const quote = lang === 'en' ? t.quote : (t.quoteTh || t.quote);
+            const roomType = lang === 'en' ? t.roomType : (t.roomTypeTh || t.roomType);
 
-              {/* Quote */}
-              <blockquote className="font-serif text-lg italic text-foreground leading-relaxed">
-                "{t.quote}"
-              </blockquote>
+            return (
+              <motion.div
+                key={t.id}
+                variants={cardVariants}
+                className="bg-surface border border-border p-8 flex flex-col justify-between space-y-8"
+                id={`testimonial-card-${t.id}`}
+              >
+                {/* Star Rating Row */}
+                <div className="flex items-center space-x-1">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
 
-              {/* Author & Room stay info */}
-              <div className="border-t border-border/40 pt-4 flex justify-between items-center">
-                <span className="font-sans font-medium text-xs text-foreground/90">{t.author}</span>
-                <span className="font-sans text-[10px] uppercase tracking-wider text-muted-foreground bg-background/50 border border-border px-2 py-1">
-                  Stayed in {t.roomType}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+                {/* Quote */}
+                <blockquote className="font-serif text-lg italic text-foreground leading-relaxed">
+                  "{quote}"
+                </blockquote>
+
+                {/* Author & Room stay info */}
+                <div className="border-t border-border/40 pt-4 flex justify-between items-center">
+                  <span className="font-sans font-medium text-xs text-foreground/90">{t.author}</span>
+                  <span className="font-sans text-[10px] uppercase tracking-wider text-muted-foreground bg-background/50 border border-border px-2 py-1">
+                    {lang === 'en' ? `Stayed in ${roomType}` : `ประเภทห้อง: ${roomType}`}
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

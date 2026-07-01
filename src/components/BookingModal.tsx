@@ -5,18 +5,18 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, Users, ShieldCheck, Check, Info, Dog, Sparkles, Coffee } from 'lucide-react';
-import { Room } from '../types';
+import { X, Calendar, Users, ShieldCheck, Check, Dog, Sparkles, Coffee } from 'lucide-react';
 import { ROOMS } from '../data';
 
 interface BookingModalProps {
+  lang: 'en' | 'th';
   isOpen: boolean;
   onClose: () => void;
   initialRoomId?: string;
   initialDates?: { checkIn: string; checkOut: string };
 }
 
-export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic', initialDates }: BookingModalProps) {
+export default function BookingModal({ lang, isOpen, onClose, initialRoomId = 'classic', initialDates }: BookingModalProps) {
   const [selectedRoomId, setSelectedRoomId] = useState<string>(initialRoomId);
   const [checkIn, setCheckIn] = useState<string>('');
   const [checkOut, setCheckOut] = useState<string>('');
@@ -97,13 +97,13 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
 
   const handleSubmitBooking = (e: FormEvent) => {
     e.preventDefault();
-    const confCode = `ALD-${Math.floor(100000 + Math.random() * 900000)}`;
+    const confCode = `SKH-${Math.floor(100000 + Math.random() * 900000)}`;
     const newBooking = {
       id: confCode,
       customerName: name,
       customerEmail: email,
       customerPhone: phone,
-      roomName: selectedRoom.name,
+      roomName: lang === 'en' ? selectedRoom.name : (selectedRoom.nameTh || selectedRoom.name),
       roomPrice: selectedRoom.price,
       checkIn,
       checkOut,
@@ -162,8 +162,12 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                 {/* Left Side: Room details & Bill Breakdown */}
                 <div className="w-full md:w-5/12 bg-surface-raised p-6 md:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-border overflow-y-auto">
                   <div>
-                    <span className="label-caps text-accent mb-2 block">Your Stay at SK Hotel</span>
-                    <h3 className="font-serif text-2xl italic text-foreground mb-4">{selectedRoom.name}</h3>
+                    <span className="label-caps text-accent mb-2 block">
+                      {lang === 'en' ? 'Your Stay at SK Hotel' : 'การเข้าพักของท่านที่ SK Hotel'}
+                    </span>
+                    <h3 className="font-serif text-2xl italic text-foreground mb-4">
+                      {lang === 'en' ? selectedRoom.name : (selectedRoom.nameTh || selectedRoom.name)}
+                    </h3>
                     
                     <div className="aspect-video w-full overflow-hidden mb-4 relative">
                       <img
@@ -173,46 +177,50 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute top-2 right-2 bg-background/95 border border-border px-3 py-1">
-                        <p className="text-xs font-mono text-accent">฿{selectedRoom.price} / night</p>
+                        <p className="text-xs font-mono text-accent">฿{selectedRoom.price} / {lang === 'en' ? 'night' : 'คืน'}</p>
                       </div>
                     </div>
 
                     <div className="space-y-3 font-sans text-xs text-foreground/80 border-b border-border/50 pb-4 mb-4">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Suite Size:</span>
+                        <span className="text-muted-foreground">{lang === 'en' ? 'Suite Size:' : 'ขนาดห้องพัก:'}</span>
                         <span>{selectedRoom.size}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Outlook:</span>
-                        <span>{selectedRoom.view}</span>
+                        <span className="text-muted-foreground">{lang === 'en' ? 'Outlook:' : 'วิวนอกหน้าต่าง:'}</span>
+                        <span>{lang === 'en' ? selectedRoom.view : (selectedRoom.viewTh || selectedRoom.view)}</span>
                       </div>
                     </div>
 
                     {/* Stay Detail Summary */}
                     <div className="space-y-2 text-sm font-sans">
-                      <h4 className="label-caps text-accent/80 mb-2">Estimate Summary</h4>
+                      <h4 className="label-caps text-accent/80 mb-2">{lang === 'en' ? 'Estimate Summary' : 'สรุปยอดประมาณการค่าใช้จ่าย'}</h4>
                       <div className="flex justify-between text-xs text-foreground/70">
-                        <span>฿{selectedRoom.price} × {nights} night{nights > 1 ? 's' : ''}</span>
+                        <span>
+                          {lang === 'en' 
+                            ? `฿${selectedRoom.price} × ${nights} night${nights > 1 ? 's' : ''}`
+                            : `฿${selectedRoom.price} × ${nights} คืน`}
+                        </span>
                         <span>฿{roomTotal}</span>
                       </div>
                       
                       {dogFriendly && (
                         <div className="flex justify-between text-xs text-foreground/70">
-                          <span>Dog Friendly Room Surcharge</span>
+                          <span>{lang === 'en' ? 'Dog Friendly Room Surcharge' : 'ค่าบริการต้อนรับสัตว์เลี้ยงแสนรัก'}</span>
                           <span>฿{dogFee}</span>
                         </div>
                       )}
 
                       {breakfast && (
                         <div className="flex justify-between text-xs text-foreground/70">
-                          <span>Traditional Thai Breakfast ({guests} guests)</span>
+                          <span>{lang === 'en' ? `Traditional Thai Breakfast (${guests} guests)` : `อาหารเช้าตำรับไทยดั้งเดิม (สำหรับ ${guests} ท่าน)`}</span>
                           <span>฿{breakfastTotal}</span>
                         </div>
                       )}
 
                       {spaTreatment && (
                         <div className="flex justify-between text-xs text-foreground/70">
-                          <span>Ban Tha Ranae Mangrove Tour ({guests} guests)</span>
+                          <span>{lang === 'en' ? `Ban Tha Ranae Mangrove Tour (${guests} guests)` : `ทัวร์ป่าชายเลนบ้านท่าระแนะ (สำหรับ ${guests} ท่าน)`}</span>
                           <span>฿{spaFee}</span>
                         </div>
                       )}
@@ -221,11 +229,13 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
 
                   <div className="border-t border-border pt-4 mt-6">
                     <div className="flex justify-between items-baseline mb-2">
-                      <span className="font-serif italic text-base">Total Due</span>
+                      <span className="font-serif italic text-base">{lang === 'en' ? 'Total Due' : 'ยอดสุทธิรวมทั้งสิ้น'}</span>
                       <span className="text-2xl font-sans font-medium text-accent">฿{finalTotal}</span>
                     </div>
                     <p className="text-[10px] text-muted-foreground leading-relaxed">
-                      Rate includes VAT. Free cancellation up to 72 hours prior to arrival. Pay in full upon arrival.
+                      {lang === 'en'
+                        ? 'Rate includes VAT. Free cancellation up to 72 hours prior to arrival. Pay in full upon arrival.'
+                        : 'ราคาแสดงผลรวมภาษีมูลค่าเพิ่มแล้ว สามารถแจ้งปรับเปลี่ยนหรือยกเลิกฟรีสูงสุด 72 ชั่วโมงก่อนวันเข้าพัก ชำระเงินเมื่อเดินทางถึงเกสท์เฮ้าส์'}
                     </p>
                   </div>
                 </div>
@@ -235,18 +245,26 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                   <div>
                     {/* Steps Indicator */}
                     <div className="flex items-center space-x-4 mb-6">
-                      <span className={`text-xs ${step === 1 ? 'text-accent font-medium' : 'text-muted-foreground'}`}>01 Stay Details</span>
+                      <span className={`text-xs ${step === 1 ? 'text-accent font-medium' : 'text-muted-foreground'}`}>
+                        {lang === 'en' ? '01 Stay Details' : '01 รายละเอียดการเข้าพัก'}
+                      </span>
                       <div className="h-[1px] w-8 bg-border"></div>
-                      <span className={`text-xs ${step === 2 ? 'text-accent font-medium' : 'text-muted-foreground'}`}>02 Guest Information</span>
+                      <span className={`text-xs ${step === 2 ? 'text-accent font-medium' : 'text-muted-foreground'}`}>
+                        {lang === 'en' ? '02 Guest Information' : '02 ข้อมูลผู้เข้าพักสำหรับการจอง'}
+                      </span>
                     </div>
 
                     {step === 1 ? (
                       <div className="space-y-5">
-                        <h4 className="font-serif text-xl italic text-foreground border-b border-border/40 pb-2">Select Dates & Customizations</h4>
+                        <h4 className="font-serif text-xl italic text-foreground border-b border-border/40 pb-2">
+                          {lang === 'en' ? 'Select Dates & Customizations' : 'ระบุวันเข้าพักและบริการที่ท่านสนใจ'}
+                        </h4>
                         
                         {/* Room Selector */}
                         <div>
-                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Select Room Type</label>
+                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                            {lang === 'en' ? 'Select Room Type' : 'เลือกประเภทห้องพัก'}
+                          </label>
                           <div className="grid grid-cols-3 gap-2">
                             {ROOMS.map(r => (
                               <button
@@ -254,11 +272,11 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                                 onClick={() => setSelectedRoomId(r.id)}
                                 className={`py-2 px-3 text-xs border font-sans text-center transition-all ${
                                   selectedRoomId === r.id
-                                    ? 'bg-accent/10 border-accent text-accent'
+                                    ? 'bg-accent/10 border-accent text-accent animate-pulse-once'
                                     : 'border-border text-foreground/70 hover:border-foreground/40'
                                 }`}
                               >
-                                {r.id.charAt(0).toUpperCase() + r.id.slice(1)}
+                                {lang === 'en' ? r.id.charAt(0).toUpperCase() + r.id.slice(1) : (r.nameTh || r.name)}
                               </button>
                             ))}
                           </div>
@@ -267,7 +285,9 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                         {/* Dates Grid */}
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Check In</label>
+                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                              {lang === 'en' ? 'Check In' : 'วันเข้าเช็คอิน'}
+                            </label>
                             <div className="relative">
                               <input
                                 type="date"
@@ -278,7 +298,9 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                             </div>
                           </div>
                           <div>
-                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Check Out</label>
+                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                              {lang === 'en' ? 'Check Out' : 'วันเช็คเอาท์'}
+                            </label>
                             <div className="relative">
                               <input
                                 type="date"
@@ -292,21 +314,25 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
 
                         {/* Guests count */}
                         <div>
-                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Number of Guests</label>
+                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                            {lang === 'en' ? 'Number of Guests' : 'จำนวนผู้เข้าพัก'}
+                          </label>
                           <select
                             value={guests}
                             onChange={(e) => setGuests(Number(e.target.value))}
                             className="w-full bg-surface-raised border border-border text-xs px-3 py-2 text-foreground focus:outline-none focus:border-accent"
                           >
-                            <option value={1}>1 Guest</option>
-                            <option value={2}>2 Guests</option>
-                            <option value={3}>3 Guests (Includes roll-away single bed)</option>
+                            <option value={1}>{lang === 'en' ? '1 Guest' : 'ผู้ใหญ่ 1 ท่าน'}</option>
+                            <option value={2}>{lang === 'en' ? '2 Guests' : 'ผู้ใหญ่ 2 ท่าน'}</option>
+                            <option value={3}>{lang === 'en' ? '3 Guests (Includes roll-away single bed)' : 'ผู้ใหญ่ 3 ท่าน (รวมบริการติดตั้งเตียงเดี่ยวเสริม)'}</option>
                           </select>
                         </div>
 
                         {/* Addon details */}
                         <div className="space-y-3 pt-3 border-t border-border/30">
-                          <span className="block text-[10px] uppercase tracking-wider text-muted-foreground">SK Hotel Add-ons (Optional)</span>
+                          <span className="block text-[10px] uppercase tracking-wider text-muted-foreground">
+                            {lang === 'en' ? 'SK Hotel Add-ons (Optional)' : 'บริการเสริมและกิจกรรมพิเศษ (ระบุตามต้องการ)'}
+                          </span>
                           
                           {/* Dog Friendly */}
                           <div
@@ -318,8 +344,14 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                             <div className="flex items-center space-x-3">
                               <Dog className={`w-4 h-4 ${dogFriendly ? 'text-accent' : 'text-muted-foreground'}`} />
                               <div>
-                                <h5 className="text-xs font-medium">Dog Friendly Welcome</h5>
-                                <p className="text-[10px] text-muted-foreground">Dog-bed & special treats in room (+฿150 flat)</p>
+                                <h5 className="text-xs font-medium">
+                                  {lang === 'en' ? 'Dog Friendly Welcome' : 'บริการต้อนรับสัตว์เลี้ยงแสนรัก'}
+                                </h5>
+                                <p className="text-[10px] text-muted-foreground">
+                                  {lang === 'en' 
+                                    ? 'Dog-bed & special treats in room (+฿150 flat)'
+                                    : 'จัดเตรียมเบาะนอน ถ้วยน้ำ และเซ็ตขนมต้อนรับพิเศษในห้อง (+฿150 เหมาจ่าย)'}
+                                </p>
                               </div>
                             </div>
                             <div className={`w-4 h-4 border flex items-center justify-center ${dogFriendly ? 'border-accent bg-accent text-background' : 'border-border'}`}>
@@ -337,8 +369,14 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                             <div className="flex items-center space-x-3">
                               <Coffee className={`w-4 h-4 ${breakfast ? 'text-accent' : 'text-muted-foreground'}`} />
                               <div>
-                                <h5 className="text-xs font-medium">Traditional Thai Breakfast</h5>
-                                <p className="text-[10px] text-muted-foreground">Local Trat coffee, dynamic seasonal fruits & hot dishes (+฿80/guest/night)</p>
+                                <h5 className="text-xs font-medium">
+                                  {lang === 'en' ? 'Traditional Thai Breakfast' : 'เซ็ตอาหารเช้าสไตล์ไทยโบราณ'}
+                                </h5>
+                                <p className="text-[10px] text-muted-foreground">
+                                  {lang === 'en'
+                                    ? 'Local Trat coffee, dynamic seasonal fruits & hot dishes (+฿80/guest/night)'
+                                    : 'กาแฟคั่วบดขึ้นชื่อตราด ผลไม้ชุมชนคัดสรรประจำวัน และเซ็ตจานร้อน (+฿80/ท่าน/คืน)'}
+                                </p>
                               </div>
                             </div>
                             <div className={`w-4 h-4 border flex items-center justify-center ${breakfast ? 'border-accent bg-accent text-background' : 'border-border'}`}>
@@ -346,7 +384,7 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                             </div>
                           </div>
 
-                          {/* Spa treatments */}
+                          {/* Mangrove tour */}
                           <div
                             onClick={() => setSpaTreatment(!spaTreatment)}
                             className={`p-3 border flex items-center justify-between cursor-pointer transition-colors ${
@@ -356,8 +394,14 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                             <div className="flex items-center space-x-3">
                               <Sparkles className={`w-4 h-4 ${spaTreatment ? 'text-accent' : 'text-muted-foreground'}`} />
                               <div>
-                                <h5 className="text-xs font-medium">Ban Tha Ranae Mangrove Tour</h5>
-                                <p className="text-[10px] text-muted-foreground">Guided mangrove eco-tour with boat transfer (+฿350/guest)</p>
+                                <h5 className="text-xs font-medium">
+                                  {lang === 'en' ? 'Ban Tha Ranae Mangrove Tour' : 'เรือนำเที่ยวป่าชายเลนพันปีบ้านท่าระแนะ'}
+                                </h5>
+                                <p className="text-[10px] text-muted-foreground">
+                                  {lang === 'en'
+                                    ? 'Guided mangrove eco-tour with boat transfer (+฿350/guest)'
+                                    : 'บริการนำเรือทัวร์พาล่องข้ามแม่น้ำตราด ชมลานตะบูนป่าชายเลนมหัศจรรย์ (+฿350/ท่าน)'}
+                                </p>
                               </div>
                             </div>
                             <div className={`w-4 h-4 border flex items-center justify-center ${spaTreatment ? 'border-accent bg-accent text-background' : 'border-border'}`}>
@@ -368,34 +412,42 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                       </div>
                     ) : (
                       <form onSubmit={handleSubmitBooking} className="space-y-4">
-                        <h4 className="font-serif text-xl italic text-foreground border-b border-border/40 pb-2">Your Contact Details</h4>
+                        <h4 className="font-serif text-xl italic text-foreground border-b border-border/40 pb-2">
+                          {lang === 'en' ? 'Your Contact Details' : 'รายละเอียดการติดต่อของท่าน'}
+                        </h4>
                         
                         <div>
-                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Full Name *</label>
+                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                            {lang === 'en' ? 'Full Name *' : 'ชื่อ-นามสกุลจริง *'}
+                          </label>
                           <input
                             type="text"
                             required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="e.g. Elizabeth Bennet"
+                            placeholder={lang === 'en' ? "e.g. Somchai Jaidee" : "เช่น สมชาย ใจดี"}
                             className="w-full bg-surface-raised border border-border text-xs px-3 py-2 text-foreground focus:outline-none focus:border-accent"
                           />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Email Address *</label>
+                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                              {lang === 'en' ? 'Email Address *' : 'ที่อยู่อีเมลติดต่อ *'}
+                            </label>
                             <input
                               type="email"
                               required
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
-                              placeholder="elizabeth@example.com"
+                              placeholder="somchai@example.com"
                               className="w-full bg-surface-raised border border-border text-xs px-3 py-2 text-foreground focus:outline-none focus:border-accent"
                             />
                           </div>
                           <div>
-                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Phone Number *</label>
+                            <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                              {lang === 'en' ? 'Phone Number *' : 'เบอร์โทรศัพท์มือถือ *'}
+                            </label>
                             <input
                               type="tel"
                               required
@@ -408,12 +460,16 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                         </div>
 
                         <div>
-                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">Special Requests or Dietary Requirements</label>
+                          <label className="block text-[10px] uppercase tracking-wider text-muted-foreground mb-1">
+                            {lang === 'en' ? 'Special Requests or Dietary Requirements' : 'คำขอพิเศษอื่นๆ หรือเงื่อนไขข้อจำกัดด้านอาหาร'}
+                          </label>
                           <textarea
                             rows={3}
                             value={specialRequest}
                             onChange={(e) => setSpecialRequest(e.target.value)}
-                            placeholder="Let us know if you require a cot, have food allergies, or if you are celebrating a special occasion..."
+                            placeholder={lang === 'en' 
+                              ? "Let us know if you require a cot, have food allergies, or if you are celebrating a special occasion..."
+                              : "โปรดแจ้งความประสงค์เพิ่มเติม เช่น ทริปฉลองโอกาสพิเศษ แพ้อาหารชนิดใด หรือต้องการสิ่งอำนวยความสะดวกเฉพาะตัว..."}
                             className="w-full bg-surface-raised border border-border text-xs px-3 py-2 text-foreground focus:outline-none focus:border-accent resize-none"
                           />
                         </div>
@@ -421,7 +477,9 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                         <div className="bg-accent/5 border border-accent/20 p-3 flex items-start space-x-3">
                           <ShieldCheck className="w-4 h-4 text-accent shrink-0 mt-0.5" />
                           <p className="text-[10px] text-muted-foreground leading-normal">
-                            No immediate charge will be made. Standard rates authorize payment upon check-out. You can modify or cancel this booking for free up to 3 days before arrival.
+                            {lang === 'en'
+                              ? 'No immediate charge will be made. Standard rates authorize payment upon check-out. You can modify or cancel this booking for free up to 3 days before arrival.'
+                              : 'ไม่มีการเก็บค่าบริการใดๆ ผ่านช่องทางออนไลน์ขณะนี้ ชำระเงินสดหรือโอนเงินผ่านพนักงานได้โดยตรง ณ วันเช็คเอาท์ สามารถยกเลิกฟรีสูงสุด 3 วันก่อนเข้าพัก'}
                           </p>
                         </div>
                       </form>
@@ -432,13 +490,15 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                   <div className="flex items-center justify-between border-t border-border pt-4 mt-6">
                     {step === 1 ? (
                       <>
-                        <span className="text-[10px] text-muted-foreground">Step 1 of 2</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          {lang === 'en' ? 'Step 1 of 2' : 'ขั้นตอนที่ 1 จาก 2'}
+                        </span>
                         <button
                           onClick={handleNextStep}
                           className="bg-accent hover:bg-accent/90 text-background font-sans font-medium text-xs py-2.5 px-6 transition-colors duration-200"
                           id="btn-next-step"
                         >
-                          Continue to Details →
+                          {lang === 'en' ? 'Continue to Details →' : 'ขั้นตอนถัดไป →'}
                         </button>
                       </>
                     ) : (
@@ -449,14 +509,14 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                           className="text-foreground/70 hover:text-foreground text-xs font-sans transition-colors"
                           id="btn-prev-step"
                         >
-                          ← Back to Customization
+                          {lang === 'en' ? '← Back to Customization' : '← ย้อนกลับขั้นตอนแรก'}
                         </button>
                         <button
                           onClick={handleSubmitBooking}
-                          className="bg-accent hover:bg-accent/90 text-background font-sans font-medium text-xs py-2.5 px-6 transition-colors duration-200"
+                          className="bg-accent hover:bg-accent/90 text-background font-sans font-medium text-xs py-2.5 px-6 transition-colors duration-200 animate-pulse-once"
                           id="btn-submit-booking"
                         >
-                          Confirm Reservation →
+                          {lang === 'en' ? 'Confirm Reservation →' : 'ยืนยันจองห้องพักเลย →'}
                         </button>
                       </>
                     )}
@@ -471,36 +531,46 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                 </div>
                 
                 <div>
-                  <span className="label-caps text-accent">Booking Confirmed</span>
-                  <h3 className="font-serif text-3xl italic text-foreground mt-2 mb-1">Aplace Awaits You.</h3>
-                  <p className="text-sm text-muted-foreground">Thank you, {confirmedBooking.customerName}. We are preparing for your arrival.</p>
+                  <span className="label-caps text-accent">
+                    {lang === 'en' ? 'Booking Confirmed' : 'ยืนยันการจองเรียบร้อยแล้ว'}
+                  </span>
+                  <h3 className="font-serif text-3xl italic text-foreground mt-2 mb-1">
+                    {lang === 'en' ? 'Your stay awaits you.' : 'ห้องพักพร้อมต้อนรับคุณแล้ว'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {lang === 'en'
+                      ? `Thank you, ${confirmedBooking.customerName}. We are preparing for your arrival.`
+                      : `ขอขอบพระคุณ คุณ${confirmedBooking.customerName} ทางเกสท์เฮ้าส์กำลังเริ่มดำเนินการเตรียมสิ่งอำนวยความสะดวกสำหรับทริปของท่าน`}
+                  </p>
                 </div>
 
                 <div className="w-full bg-surface-raised border border-border p-4 font-mono text-left space-y-2 text-xs">
                   <div className="flex justify-between border-b border-border/40 pb-2">
-                    <span className="text-muted-foreground">Confirmation Code:</span>
+                    <span className="text-muted-foreground">{lang === 'en' ? 'Confirmation Code:' : 'รหัสอ้างอิงการจอง:'}</span>
                     <span className="text-accent font-medium">{confirmedBooking.id}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Room:</span>
+                    <span className="text-muted-foreground">{lang === 'en' ? 'Room:' : 'ประเภทห้องพัก:'}</span>
                     <span>{confirmedBooking.roomName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Dates:</span>
-                    <span>{confirmedBooking.checkIn} to {confirmedBooking.checkOut} ({confirmedBooking.nights} nights)</span>
+                    <span className="text-muted-foreground">{lang === 'en' ? 'Dates:' : 'วันที่เดินทาง:'}</span>
+                    <span>{confirmedBooking.checkIn} to {confirmedBooking.checkOut} ({confirmedBooking.nights} {lang === 'en' ? 'nights' : 'คืน'})</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Guests:</span>
+                    <span className="text-muted-foreground">{lang === 'en' ? 'Guests:' : 'จำนวนผู้เข้าพัก:'}</span>
                     <span>{confirmedBooking.guests}</span>
                   </div>
                   <div className="flex justify-between border-t border-border/40 pt-2 font-sans font-medium text-sm text-accent">
-                    <span>Total Estimate:</span>
+                    <span>{lang === 'en' ? 'Total Estimate:' : 'ค่าใช้จ่ายประเมินรวมทั้งสิ้น:'}</span>
                     <span>฿{confirmedBooking.totalAmount}</span>
                   </div>
                 </div>
 
                 <p className="text-[10px] text-muted-foreground max-w-sm">
-                  We have saved this reservation under your browser's history logs. A separate itinerary confirmation details card has been synchronized to your local profile.
+                  {lang === 'en'
+                    ? "We have saved this reservation under your browser's history logs. A separate itinerary confirmation details card has been synchronized to your local profile."
+                    : "ข้อมูลการจองนี้ถูกเก็บบันทึกบนประวัติเบราว์เซอร์ของท่านแล้ว ท่านสามารถกดตรวจสอบดูรหัสการจองส่วนตัวได้ในแถบตัวเลือกด้านบนของหน้าเว็บได้ตลอดเวลา"}
                 </p>
 
                 <button
@@ -508,7 +578,7 @@ export default function BookingModal({ isOpen, onClose, initialRoomId = 'classic
                   className="bg-accent hover:bg-accent/90 text-background font-sans font-medium text-xs py-2.5 px-8 transition-colors duration-200"
                   id="btn-conf-close"
                 >
-                  Close & View Estate
+                  {lang === 'en' ? 'Close & View Estate' : 'ปิดหน้านี้และกลับสู่หลัก'}
                 </button>
               </div>
             )}

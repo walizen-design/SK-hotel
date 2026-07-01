@@ -22,6 +22,8 @@ export default function App() {
   const [preselectedRoomId, setPreselectedRoomId] = useState('classic');
   const [preselectedDates, setPreselectedDates] = useState<{ checkIn: string; checkOut: string } | undefined>(undefined);
 
+  const [lang, setLang] = useState<'en' | 'th'>('th');
+
   const handleOpenBooking = () => {
     setPreselectedRoomId('classic');
     setPreselectedDates(undefined);
@@ -52,6 +54,8 @@ export default function App() {
       
       {/* Navigation */}
       <Navbar
+        lang={lang}
+        setLang={setLang}
         onOpenBooking={handleOpenBooking}
         onScrollToSection={scrollToSection}
       />
@@ -60,40 +64,42 @@ export default function App() {
       <main>
         {/* 1. Hero */}
         <Hero
+          lang={lang}
           onOpenBooking={handleOpenBooking}
           onScrollToRooms={() => scrollToSection('rooms')}
         />
 
         {/* 2. Rooms */}
-        <RoomsSection onSelectRoom={handleSelectRoomToBook} />
+        <RoomsSection lang={lang} onSelectRoom={handleSelectRoomToBook} />
 
         {/* 3. Gallery */}
-        <GallerySection />
+        <GallerySection lang={lang} />
 
         {/* 4. Dining */}
-        <DiningSection />
+        <DiningSection lang={lang} />
 
         {/* 5. Experiences */}
-        <ExperiencesSection />
+        <ExperiencesSection lang={lang} />
 
         {/* 6. Testimonials */}
-        <TestimonialsSection />
+        <TestimonialsSection lang={lang} />
 
         {/* Executive Proposal / Pitch for SK Hotel Owner */}
-        <PitchSection />
+        <PitchSection lang={lang} setLang={setLang} />
 
         {/* 7. Location */}
-        <LocationSection />
+        <LocationSection lang={lang} />
 
         {/* 8. Booking Call to Action */}
-        <BookCTA onOpenBookingWithDates={handleOpenBookingWithDates} />
+        <BookCTA lang={lang} onOpenBookingWithDates={handleOpenBookingWithDates} />
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer lang={lang} />
 
       {/* Persistent Room Booking Wizard Dialog */}
       <BookingModal
+        lang={lang}
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
         initialRoomId={preselectedRoomId}

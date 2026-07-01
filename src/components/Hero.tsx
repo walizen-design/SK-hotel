@@ -4,139 +4,164 @@
  */
 
 import { motion } from 'motion/react';
+import { Compass, Camera, Sparkles, Volume2, Waves } from 'lucide-react';
 
 interface HeroProps {
+  lang: 'en' | 'th';
   onOpenBooking: () => void;
   onScrollToRooms: () => void;
 }
 
-export default function Hero({ onOpenBooking, onScrollToRooms }: HeroProps) {
-  const chips = ['12 Rooms', 'Dog Friendly', 'Restaurant', 'Free Parking', 'Cotswolds'];
+export default function Hero({ lang, onOpenBooking, onScrollToRooms }: HeroProps) {
+  const t = {
+    en: {
+      category: "Riverside Guesthouse · Trat Town, Thailand",
+      title: "Where Riverside Calm Meets Trat Town Charm",
+      desc: "15 comfortable canal-side rooms, interactive eco-tours, and genuine Thai waterfront hospitality that lets you experience Trat like a local.",
+      primaryCTA: "Book a stay →",
+      secondaryCTA: "Explore our rooms",
+      chips: ['15 Rooms', 'Canal / River Views', 'Thai QR Dining Partners', 'Free High-Speed Wi-Fi', 'Trat Town']
+    },
+    th: {
+      category: "ริเวอร์ไซด์ เกสท์เฮ้าส์ · อำเภอเมือง จังหวัดตราด",
+      title: "สัมผัสความสุขสงบสุดผ่อนคลายริมแม่น้ำเมืองตราด",
+      desc: "ห้องพักริมน้ำบรรยากาศแสนสบาย 15 ห้อง บริการกิจกรรมนำเที่ยวเชิงอนุรักษ์ป่าชายเลนพันปี และบริการอบอุ่นประทับใจที่คุณไม่ควรพลาด",
+      primaryCTA: "จองห้องพักตอนนี้เลย →",
+      secondaryCTA: "ชมประเภทห้องพัก",
+      chips: ['ห้องพักแสนสบาย 15 ห้อง', 'วิวติดริมน้ำลำคลอง', 'สั่งของกินท้องถิ่นระบบ QR', 'ฟรี Wi-Fi ความเร็วสูง', 'ใจกลางชุมชนเมืองตราด']
+    }
+  };
+
+  const current = t[lang];
 
   // Framer Motion variants
   const containerVariants = {
-    hidden: {},
+    hidden: { opacity: 0 },
     visible: {
+      opacity: 1,
       transition: {
         staggerChildren: 0.15,
-      },
-    },
+        delayChildren: 0.2
+      }
+    }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
-      opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-
-  const chipContainerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.6,
-      },
-    },
-  };
-
-  const chipVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
       opacity: 1,
-      x: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-    },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
   };
 
   return (
     <section className="relative w-full h-screen overflow-hidden bg-background" id="hero-section">
-      {/* Background Image */}
-      <img
-        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1920"
-        alt="The Aldwick exterior dusk"
-        referrerPolicy="no-referrer"
-        className="absolute inset-0 w-full h-full object-cover object-center"
-      />
+      {/* Background HTML5 Video: Calming beach, ocean, clouds, waves */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center scale-105 pointer-events-none transition-opacity duration-1000"
+        poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920"
+      >
+        <source
+          src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-calm-beach-with-turquoise-water-and-waves-44161-large.mp4"
+          type="video/mp4"
+        />
+        {/* Fallback image */}
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920"
+          alt="Tranquil Thailand beach ocean clouds waves"
+          referrerPolicy="no-referrer"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      </video>
 
       {/* Cinematic Dual Gradient Overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(19,24,31,0.7) 0%, rgba(19,24,31,0.1) 35%, rgba(19,24,31,0.1) 60%, rgba(19,24,31,0.92) 100%)',
-        }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background/90" />
+      <div className="absolute inset-0 bg-black/35 mix-blend-multiply" />
 
-      {/* Hero Content */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-end items-center px-6 pb-[8vh]">
+      {/* Hero Content container */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="w-full max-w-4xl text-center flex flex-col items-center"
+          className="flex flex-col items-center max-w-4xl"
         >
-          {/* Label Caps */}
+          {/* Tagline category label */}
           <motion.span
             variants={itemVariants}
             className="label-caps text-accent mb-4 tracking-[0.2em] font-semibold text-xs"
           >
-            Boutique Hotel · Cotswolds
+            {current.category}
           </motion.span>
 
           {/* Large Headline */}
           <motion.h1
             variants={itemVariants}
-            className="font-serif text-foreground leading-[0.9] tracking-tight mb-6 text-center select-none"
-            style={{ fontSize: 'clamp(48px, 8.5vw, 120px)' }}
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl italic font-bold text-foreground leading-[1.1] mb-6 max-w-3xl"
           >
-            A Place <br />
-            <span className="italic text-accent">Unlike Any Other.</span>
+            {current.title}
           </motion.h1>
 
-          {/* Subtext */}
+          {/* Descriptive intro paragraph */}
           <motion.p
             variants={itemVariants}
-            className="font-sans font-light text-foreground/80 text-sm md:text-base max-w-[540px] leading-relaxed mb-8 text-center"
+            className="font-sans font-light text-foreground/80 text-sm md:text-base max-w-[640px] leading-relaxed mb-8 text-center"
           >
-            12 individually designed rooms, a restaurant serving seasonal Cotswolds produce, and grounds that change with every season.
+            {current.desc}
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 mb-10 w-full sm:w-auto">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row items-center gap-4 mb-12 font-sans"
+          >
             <button
               onClick={onOpenBooking}
-              className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-background font-sans font-semibold text-xs uppercase tracking-widest px-8 py-3.5 transition-colors duration-200"
-              id="hero-book-btn"
+              className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-background text-xs uppercase tracking-widest px-8 py-4 transition-colors duration-300 font-semibold shadow-lg shadow-accent/15"
+              id="hero-book-now"
             >
-              Book a stay →
+              {current.primaryCTA}
             </button>
             <button
               onClick={onScrollToRooms}
-              className="w-full sm:w-auto border border-foreground/30 hover:border-foreground/80 text-foreground hover:bg-foreground/5 font-sans font-medium text-xs uppercase tracking-widest px-8 py-3.5 transition-all duration-200"
-              id="hero-rooms-btn"
+              className="w-full sm:w-auto border border-foreground/30 hover:border-foreground/80 text-foreground text-xs uppercase tracking-widest px-8 py-4 transition-colors duration-300 font-medium bg-background/15 backdrop-blur-md"
+              id="hero-explore"
             >
-              See the rooms
+              {current.secondaryCTA}
             </button>
           </motion.div>
 
-          {/* Below CTA Chip Row */}
+          {/* Decorative Chips Grid */}
           <motion.div
-            variants={chipContainerVariants}
-            className="flex flex-wrap items-center justify-center gap-2.5 max-w-3xl"
+            variants={itemVariants}
+            className="hidden md:flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-t border-foreground/15 pt-6 w-full max-w-2xl font-sans"
           >
-            {chips.map((chip, idx) => (
-              <motion.span
+            {current.chips.map((chip, idx) => (
+              <span
                 key={idx}
-                variants={chipVariants}
-                className="bg-accent/10 border border-accent/20 text-accent font-sans text-[10px] uppercase tracking-widest px-4 py-1.5 font-medium whitespace-nowrap"
+                className="text-[10px] uppercase tracking-widest text-foreground/60 font-medium flex items-center gap-1.5"
               >
+                <Waves className="w-3.5 h-3.5 text-accent shrink-0" />
                 {chip}
-              </motion.span>
+              </span>
             ))}
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Elegant Bottom Visual Scroll Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-foreground/40 pointer-events-none z-10">
+        <span className="text-[9px] uppercase tracking-[0.25em] font-sans">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="w-1 h-3 bg-accent rounded-full"
+        />
       </div>
     </section>
   );

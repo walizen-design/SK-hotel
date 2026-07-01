@@ -8,11 +8,13 @@ import { Menu, X, CalendarCheck, CalendarDays } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
+  lang: 'en' | 'th';
+  setLang: (lang: 'en' | 'th') => void;
   onOpenBooking: () => void;
   onScrollToSection: (id: string) => void;
 }
 
-export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps) {
+export default function Navbar({ lang, setLang, onOpenBooking, onScrollToSection }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [localBookings, setLocalBookings] = useState<any[]>([]);
@@ -43,12 +45,18 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
     };
   }, []);
 
-  const menuItems = [
+  const menuItems = lang === 'en' ? [
     { label: 'Rooms', id: 'rooms' },
     { label: 'Dining', id: 'dining' },
     { label: 'Experiences', id: 'experiences' },
     { label: 'Location', id: 'location' },
     { label: '💼 Business Pitch', id: 'owner-pitch' },
+  ] : [
+    { label: 'ห้องพัก', id: 'rooms' },
+    { label: 'อาหารและเครื่องดื่ม', id: 'dining' },
+    { label: 'กิจกรรมนำเที่ยว', id: 'experiences' },
+    { label: 'ตำแหน่งที่ตั้ง', id: 'location' },
+    { label: '💼 แผนเสนอโครงการ', id: 'owner-pitch' },
   ];
 
   const handleNavClick = (id: string) => {
@@ -86,17 +94,17 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
               SK Hotel
             </a>
             <span className="text-[8px] tracking-[0.2em] text-accent/80 uppercase -mt-1 block font-sans font-medium">
-              Guesthouse · Trat Town
+              {lang === 'en' ? 'Guesthouse · Trat Town' : 'เกสท์เฮ้าส์ · เมืองตราด'}
             </span>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8 font-sans">
+          <div className="hidden md:flex items-center space-x-6 font-sans">
             {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className="text-xs tracking-widest uppercase text-foreground/80 hover:text-accent transition-colors duration-200"
+                className="text-[11px] tracking-widest uppercase text-foreground/80 hover:text-accent transition-colors duration-200"
               >
                 {item.label}
               </button>
@@ -111,7 +119,9 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                   title="View Your Bookings"
                 >
                   <CalendarCheck className="w-4 h-4" />
-                  <span className="text-xs uppercase tracking-widest">My Stay ({localBookings.length})</span>
+                  <span className="text-xs uppercase tracking-widest">
+                    {lang === 'en' ? `My Stay (${localBookings.length})` : `การจอง (${localBookings.length})`}
+                  </span>
                   <span className="absolute -top-1.5 -right-1.5 w-2 h-2 rounded-full bg-accent animate-pulse"></span>
                 </button>
 
@@ -125,7 +135,9 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                       className="absolute right-0 mt-3 w-80 bg-surface-raised border border-border p-4 shadow-xl z-50 space-y-3 font-sans text-xs"
                     >
                       <div className="flex justify-between items-center border-b border-border/40 pb-2">
-                        <span className="font-semibold text-accent uppercase tracking-wider">Your Active Bookings</span>
+                        <span className="font-semibold text-accent uppercase tracking-wider">
+                          {lang === 'en' ? 'Your Active Bookings' : 'รายการจองห้องพักของคุณ'}
+                        </span>
                         <button
                           onClick={() => setShowBookingsDropdown(false)}
                           className="text-foreground/50 hover:text-foreground"
@@ -146,15 +158,23 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                             </button>
                             <p className="font-medium text-foreground text-sm font-serif italic mb-1">{b.roomName}</p>
                             <p className="text-[10px] text-muted-foreground font-mono">Code: {b.id}</p>
-                            <p className="text-muted-foreground mt-1">Check-in: <span className="text-foreground">{b.checkIn}</span></p>
-                            <p className="text-muted-foreground">Check-out: <span className="text-foreground">{b.checkOut}</span></p>
-                            <p className="text-muted-foreground">Guests: <span className="text-foreground">{b.guests}</span> · Total: <span className="text-accent font-medium">฿{b.totalAmount}</span></p>
+                            <p className="text-muted-foreground mt-1">
+                              {lang === 'en' ? 'Check-in' : 'วันเข้าพัก'}: <span className="text-foreground">{b.checkIn}</span>
+                            </p>
+                            <p className="text-muted-foreground">
+                              {lang === 'en' ? 'Check-out' : 'วันเช็คเอาท์'}: <span className="text-foreground">{b.checkOut}</span>
+                            </p>
+                            <p className="text-muted-foreground">
+                              {lang === 'en' ? 'Guests' : 'ผู้เข้าพัก'}: <span className="text-foreground">{b.guests}</span> · {lang === 'en' ? 'Total' : 'ยอดรวม'}: <span className="text-accent font-medium">฿{b.totalAmount}</span>
+                            </p>
                           </div>
                         ))}
                       </div>
 
                       <div className="pt-2 border-t border-border/40 text-center">
-                        <p className="text-[10px] text-muted-foreground mb-2">Book directly with best rate guarantee</p>
+                        <p className="text-[10px] text-muted-foreground mb-2">
+                          {lang === 'en' ? 'Book directly with best rate guarantee' : 'จองตรงราคาประหยัดที่สุด รับประกันคุณภาพ'}
+                        </p>
                         <button
                           onClick={() => {
                             setShowBookingsDropdown(false);
@@ -162,7 +182,7 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                           }}
                           className="w-full bg-accent hover:bg-accent/90 text-background text-center py-1.5 font-medium tracking-wide uppercase text-[10px]"
                         >
-                          Book another room
+                          {lang === 'en' ? 'Book another room' : 'จองห้องพักเพิ่มเติม'}
                         </button>
                       </div>
                     </motion.div>
@@ -171,17 +191,34 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
               </div>
             )}
 
+            {/* Language Switcher */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'th' : 'en')}
+              className="flex items-center gap-1.5 px-3 py-2 border border-accent/20 hover:border-accent text-[11px] tracking-wider uppercase transition-all duration-300 font-mono font-medium rounded-none text-accent"
+            >
+              <span>🌐</span>
+              <span>{lang === 'en' ? 'TH' : 'EN'}</span>
+            </button>
+
             <button
               onClick={onOpenBooking}
-              className="border border-accent text-accent hover:bg-accent hover:text-background text-xs uppercase tracking-widest px-5 py-2.5 transition-all duration-300 font-medium"
+              className="border border-accent text-accent hover:bg-accent hover:text-background text-[11px] uppercase tracking-widest px-4 py-2.5 transition-all duration-300 font-medium"
               id="desktop-book-btn"
             >
-              Book a stay →
+              {lang === 'en' ? 'Book a stay →' : 'จองห้องพักเลย →'}
             </button>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex items-center space-x-4 md:hidden">
+          <div className="flex items-center space-x-3 md:hidden">
+            {/* Mobile Language Switcher */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'th' : 'en')}
+              className="flex items-center justify-center px-2 py-1 border border-accent/20 text-accent text-[10px] font-mono font-bold uppercase"
+            >
+              🌐 {lang === 'en' ? 'TH' : 'EN'}
+            </button>
+
             {localBookings.length > 0 && (
               <button
                 onClick={() => {
@@ -221,7 +258,9 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center border-b border-border pb-3 mb-4">
-                <span className="font-semibold text-accent uppercase tracking-wider text-sm">Your Local Reservations</span>
+                <span className="font-semibold text-accent uppercase tracking-wider text-sm">
+                  {lang === 'en' ? 'Your Local Reservations' : 'รายการจองของท่าน'}
+                </span>
                 <button onClick={() => setShowBookingsDropdown(false)} className="text-foreground/70">
                   <X className="w-4 h-4" />
                 </button>
@@ -239,10 +278,10 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                     <p className="font-medium text-foreground text-base font-serif italic mb-1">{b.roomName}</p>
                     <p className="text-[10px] text-muted-foreground font-mono">Code: {b.id}</p>
                     <div className="grid grid-cols-2 gap-2 mt-2 text-muted-foreground">
-                      <p>Check-in: <span className="text-foreground">{b.checkIn}</span></p>
-                      <p>Check-out: <span className="text-foreground">{b.checkOut}</span></p>
-                      <p>Guests: <span className="text-foreground">{b.guests}</span></p>
-                      <p>Total: <span className="text-accent font-medium">฿{b.totalAmount}</span></p>
+                      <p>{lang === 'en' ? 'Check-in' : 'วันเข้าพัก'}: <span className="text-foreground">{b.checkIn}</span></p>
+                      <p>{lang === 'en' ? 'Check-out' : 'วันเช็คเอาท์'}: <span className="text-foreground">{b.checkOut}</span></p>
+                      <p>{lang === 'en' ? 'Guests' : 'ผู้เข้าพัก'}: <span className="text-foreground">{b.guests}</span></p>
+                      <p>{lang === 'en' ? 'Total' : 'ยอดรวม'}: <span className="text-accent font-medium">฿{b.totalAmount}</span></p>
                     </div>
                   </div>
                 ))}
@@ -255,7 +294,7 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
                 }}
                 className="w-full mt-4 bg-accent text-background py-3 font-medium text-xs tracking-wider uppercase text-center block"
               >
-                Book another room
+                {lang === 'en' ? 'Book another room' : 'จองห้องพักเพิ่มเติม'}
               </button>
             </motion.div>
           </div>
@@ -290,7 +329,7 @@ export default function Navbar({ onOpenBooking, onScrollToSection }: NavbarProps
               className="bg-accent text-background font-sans font-semibold text-xs tracking-widest uppercase py-3 px-6 hover:bg-accent/95 transition-colors w-full"
               id="mobile-book-btn"
             >
-              Book a stay →
+              {lang === 'en' ? 'Book a stay →' : 'จองห้องพักเลย →'}
             </button>
           </motion.div>
         )}

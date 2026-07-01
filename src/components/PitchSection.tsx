@@ -28,8 +28,12 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-export default function PitchSection() {
-  const [lang, setLang] = useState<'en' | 'th'>('th'); // Default to Thai as requested for the Owner pitch, with easy toggle
+interface PitchSectionProps {
+  lang: 'en' | 'th';
+  setLang: (lang: 'en' | 'th') => void;
+}
+
+export default function PitchSection({ lang, setLang }: PitchSectionProps) {
   
   // Interactive Calculator States tailored specifically for SK Hotel (300 - 500 Baht room rate, currently low occupancy)
   const [rooms, setRooms] = useState<number>(15); // Total rooms at SK Hotel
@@ -73,7 +77,7 @@ export default function PitchSection() {
       titleTh: "ป่าชายเลนบ้านท่าระแนะ",
       desc: "An ancient, labyrinthine mangrove canopy where tourists enjoy peaceful longtail boat tours.",
       descTh: "มหัศจรรย์ป่าชายเลนพันปีลานตะบูน แหล่งท่องเที่ยวเชิงอนุรักษ์อันเลื่องชื่อของตราด",
-      image: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800",
+      image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800",
       tag: "Nature Tour"
     },
     {
@@ -81,7 +85,7 @@ export default function PitchSection() {
       titleTh: "เรือเฟอร์รี่ข้ามฟากเกาะช้าง",
       desc: "Essential transit serving thousands of international travelers visiting Trat's famous archipelago daily.",
       descTh: "บริการจองตั๋วเรือเฟอร์รี่ล่วงหน้า เพิ่มความสะดวกสบายสูงสุดให้ผู้เข้าพัก",
-      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800",
+      image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800",
       tag: "Transit"
     },
     {
