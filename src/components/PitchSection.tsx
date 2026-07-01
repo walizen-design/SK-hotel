@@ -537,6 +537,20 @@ export default function PitchSection() {
               {/* Feature 3 */}
               <div className="flex justify-between items-start pb-4 border-b border-border/40 gap-4">
                 <div className="space-y-1">
+                  <p className="font-semibold text-foreground">{lang === 'en' ? "Gemini AI Concierge & SK Phone Router" : "ระบบแชทบอทอัจฉริยะ Gemini AI & โอนสายแจ้งเตือนเข้าโทรศัพท์ SK"}</p>
+                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                    {lang === 'en' 
+                      ? "24/7 conversational assistant speaking English & Thai. Instantly pushes inquiries & booking alerts directly to your mobile phone/SMS so you never lose a booking."
+                      : "บอทโต้ตอบสองภาษาทำงานตลอด 24 ชั่วโมง พร้อมระบบส่งต่อข้อมูลการจองและแจ้งเตือนเข้าโทรศัพท์ส่วนตัวทันทีแบบเรียลไทม์เพื่อไม่ให้พลาดสายลูกค้า"
+                    }
+                  </p>
+                </div>
+                <span className="font-mono text-foreground font-semibold shrink-0">18,000 B</span>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="flex justify-between items-start pb-4 border-b border-border/40 gap-4">
+                <div className="space-y-1">
                   <p className="font-semibold text-foreground">{lang === 'en' ? "In-Room QR Concierge & Menu Setup" : "การติดตั้งระบบ QR Menu ประจำห้องพัก"}</p>
                   <p className="text-muted-foreground text-[11px] leading-relaxed">
                     {lang === 'en' 
@@ -548,7 +562,7 @@ export default function PitchSection() {
                 <span className="font-mono text-foreground font-semibold shrink-0">12,000 B</span>
               </div>
 
-              {/* Feature 4 */}
+              {/* Feature 5 */}
               <div className="flex justify-between items-start pb-4 border-b border-border/40 gap-4">
                 <div className="space-y-1">
                   <p className="font-semibold text-foreground">{lang === 'en' ? "Direct Bookings & Reservation Automation" : "ระบบรับคำขอจองห้องพักและทัวร์ลานตะบูน"}</p>
@@ -565,7 +579,7 @@ export default function PitchSection() {
               {/* Standard Total */}
               <div className="flex justify-between items-center pt-2 font-mono text-sm">
                 <span className="font-bold uppercase tracking-widest text-muted-foreground">{lang === 'en' ? "Total Regular Cost" : "ราคาประเมินโครงการปกติรวม"}</span>
-                <span className="font-bold text-foreground line-through decoration-red-500/80 decoration-2 text-lg">45,000 B</span>
+                <span className="font-bold text-foreground line-through decoration-red-500/80 decoration-2 text-lg">63,000 B</span>
               </div>
             </div>
 
@@ -584,7 +598,7 @@ export default function PitchSection() {
                 </span>
                 <span className="text-accent text-[11px] font-semibold flex items-center gap-1 font-sans">
                   <Camera className="w-3 h-3" />
-                  {lang === 'en' ? "Photography Deal" : "ถ่ายภาพพรีเมียมเพื่อโปรโมท"}
+                  {lang === 'en' ? "All-Inclusive AI Pack" : "รวมแพ็กเกจกล้องพรีเมียมและระบบ AI"}
                 </span>
               </div>
 
@@ -612,18 +626,19 @@ export default function PitchSection() {
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-[10px] text-muted-foreground uppercase tracking-widest">{lang === 'en' ? "Special Partner Cost" : "ราคาพิเศษสำหรับพันธมิตรรวมถ่ายภาพ"}</p>
-                  <p className="text-4xl font-sans font-bold text-accent">18,500 B</p>
+                  <p className="text-4xl font-sans font-bold text-accent">32,500 B</p>
                 </div>
                 <div className="text-right text-[10px] text-muted-foreground leading-none">
-                  <span className="block line-through text-foreground/50 mb-1">45,000 B</span>
-                  <span className="text-accent font-semibold">{lang === 'en' ? "You Save 26,500 B" : "ประหยัดทันที 26,500 บาท!"}</span>
+                  <span className="block line-through text-foreground/50 mb-1">63,000 B</span>
+                  <span className="text-accent font-semibold">{lang === 'en' ? "You Save 30,500 B" : "ประหยัดทันที 30,500 บาท!"}</span>
                 </div>
               </div>
 
               <div className="bg-accent/5 p-3 border border-accent/10 rounded text-[11px] font-sans text-foreground/80 space-y-1">
-                <p className="font-semibold text-accent">{lang === 'en' ? "What is included in the 18,500 THB:" : "สิ่งที่ท่านจะได้รับในราคา 18,500 บาท:"}</p>
+                <p className="font-semibold text-accent">{lang === 'en' ? "What is included in the 32,500 THB:" : "สิ่งที่ท่านจะได้รับในราคา 32,500 บาท:"}</p>
                 <ul className="list-disc list-inside space-y-0.5 text-muted-foreground text-[10px]">
                   <li>{lang === 'en' ? "Full Web Build + English & Thai Translation" : "ระบบเว็บไซต์สมบูรณ์แบบ รองรับสองภาษาอังกฤษ-ไทย"}</li>
+                  <li>{lang === 'en' ? "Gemini AI Concierge & Direct SMS Router integration" : "ระบบผู้ช่วยอัจฉริยะ Gemini AI และเชื่อมเบอร์แจ้งเตือนเข้าโทรศัพท์ SK"}</li>
                   <li>{lang === 'en' ? "On-site Professional Photoshoot in Trat" : "บริการถ่ายภาพโปรโมทระดับพรีเมียมในจังหวัดตราดฟรี"}</li>
                   <li>{lang === 'en' ? "Google Business Profile optimization (SEO)" : "ปรับปรุงและตกแต่งหมุดร้านบน Google Maps เพื่อเพิ่มคะแนนความน่าเชื่อถือ"}</li>
                   <li>{lang === 'en' ? "QR-code custom menus for all 15 rooms" : "การสร้าง QR-code เมนูดิจิทัลสำหรับทุกห้องพักเพื่อทำกำไรเสริม"}</li>
