@@ -25,7 +25,8 @@ import {
   CheckCircle2,
   AlertTriangle,
   Clock,
-  ArrowRight
+  ArrowRight,
+  UserCheck
 } from 'lucide-react';
 
 interface PitchSectionProps {
@@ -103,6 +104,7 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
     p1: "Currently, SK Hotel relies heavily on walk-in guests, which means you are missing out on the high-spending international tourists. Foreigners plan their trips online months in advance. By building you a modern, multi-language website, we will put SK Hotel directly in front of travelers from Europe and Asia on Google.",
     p2: "But the website will do more than just book rooms—it will act as a digital concierge to make you extra money. We will place digital QR-code menus in every room. Instead of running an expensive kitchen, guests can order delivery from local restaurants right from their phones, and your hotel will take a commission cut from every order.",
     p3: "We will also sell local activities directly on the website, like boat tours to the Ban Tha Ranae mangroves or ferry tickets to Koh Chang. You earn a cut of the tours, your guests get a premium experience, and SK Hotel becomes a highly profitable, modern destination.",
+    p4: "If you would like to pursue this exclusive offer, please contact Ms. Oraphan Temjean (aka Miss Jeab) and her daughter Natida. She will communicate directly with our lead web designer and developer, Mr. Walizen, to coordinate the next steps of this digital transformation.",
     author: "Digital Growth Strategy Team for SK Hotel"
   };
 
@@ -111,6 +113,7 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
     p1: "ปัจจุบันการพึ่งพาลูกค้าวอล์คอิน (Walk-in) อาจทำให้เราพลาดโอกาสจากกลุ่มนักท่องเที่ยวต่างชาติที่มีกำลังซื้อสูงครับ เนื่องจากชาวต่างชาติมักจะวางแผนและจองที่พักผ่านอินเทอร์เน็ตล่วงหน้าหลายเดือน ผมจึงขอเสนอการจัดทำเว็บไซต์ที่รองรับหลายภาษาและระบบ SEO เพื่อให้ชาวต่างชาติค้นพบ SK Hotel เป็นอันดับแรกๆ บน Google",
     p2: "นอกจากนี้ เว็บไซต์จะไม่ได้เป็นแค่ช่องทางจองห้องพัก แต่จะเป็นเครื่องมือเพิ่มรายได้ (Digital Revenue) ให้กับท่านด้วยครับ เราจะทำระบบ 'ดิจิทัลเมนู' ผ่าน QR Code ในทุกห้องพัก แทนที่โรงแรมจะต้องลงทุนจ้างแม่ครัวหรือเปิดครัวตลอดเวลา ลูกค้าสามารถสั่งอาหารจากร้านอร่อยในท้องถิ่นให้มาส่งถึงที่ผ่านมือถือได้เลย โดยทางโรงแรมจะได้รับส่วนแบ่ง (Commission) จากทุกออเดอร์",
     p3: "อีกทั้งเรายังสามารถเพิ่มระบบจองทัวร์และกิจกรรมบนเว็บไซต์ เช่น ทัวร์นั่งเรือชมป่าชายเลนบ้านท่าระแนะ หรือตั๋วเรือข้ามไปเกาะช้าง ซึ่งโรงแรมก็จะได้ส่วนแบ่งกำไรจากการขายกิจกรรมเหล่านี้ด้วย ระบบเทคโนโลยีนี้จะช่วยยกระดับการบริการและเพิ่มรายได้ให้ SK Hotel อย่างยั่งยืนครับ",
+    p4: "หากท่านประสงค์ที่จะเริ่มต้นแผนพัฒนาร่วมกันในข้อเสนอนี้ โปรดติดต่อ คุณอรพรรณ เต็มเจียร (คุณเจี๊ยบ) และคุณณธิดา (บุตรสาว) โดยคุณเจี๊ยบจะเป็นผู้ประสานงานสัญญาร่วมและสื่อสารโดยตรงกับทางผู้พัฒนาระบบ คุณวาริเซน (Mr. Walizen) เพื่อเริ่มดำเนินการติดตั้งระบบอย่างเป็นทางการต่อไปครับ",
     author: "ทีมวางแผนกลยุทธ์การเติบโตดิจิทัลของ SK Hotel"
   };
 
@@ -180,6 +183,9 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
                 </p>
                 <p className="border-l border-accent/20 pl-4">
                   {lang === 'en' ? pitchEn.p3 : pitchTh.p3}
+                </p>
+                <p className="border-l border-accent/40 pl-4 bg-accent/5 py-2 pr-2 font-normal text-xs text-foreground">
+                  {lang === 'en' ? pitchEn.p4 : pitchTh.p4}
                 </p>
               </div>
             </div>
@@ -652,6 +658,117 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
 
           </div>
 
+        </div>
+
+        {/* CONTACT & PARTNERSHIP DIRECTORY */}
+        <div className="bg-surface-raised border border-accent/40 p-8 md:p-10 mb-16 relative overflow-hidden" id="partnership-contact">
+          <div className="absolute top-0 right-0 bg-accent text-background px-4 py-1.5 font-mono text-[9px] tracking-widest uppercase font-bold">
+            {lang === 'en' ? "Direct Contact" : "ช่องทางติดต่อตรง"}
+          </div>
+          
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
+            <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent shrink-0">
+              <UserCheck className="w-8 h-8" />
+            </div>
+            
+            <div className="space-y-4 flex-1">
+              <div>
+                <span className="label-caps text-accent text-[9px] tracking-wider block mb-1">
+                  {lang === 'en' ? "How to Pursue This Offer" : "วิธีการติดต่อร่วมงานสำหรับโครงการนี้"}
+                </span>
+                <h3 className="font-serif text-xl md:text-2xl italic font-bold text-foreground">
+                  {lang === 'en' 
+                    ? "Connect Directly with the Owners & Developer" 
+                    : "ช่องทางการประสานงานตรงระหว่างทีมผู้บริหารและนักพัฒนาเว็บ"
+                  }
+                </h3>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed font-sans">
+                <div className="space-y-2 bg-surface p-5 border border-border">
+                  <p className="font-semibold text-foreground flex items-center gap-2 text-[13px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    {lang === 'en' ? "Hotel Owner Representatives:" : "ตัวแทนประสานงานฝั่งเกสท์เฮ้าส์:"}
+                  </p>
+                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                    {lang === 'en' ? (
+                      <>
+                        Please contact <span className="text-foreground font-medium">Ms. Oraphan Temjean</span> (aka <span className="text-foreground font-medium">Miss Jeab</span>) and her daughter <span className="text-foreground font-medium">Natida</span>.
+                      </>
+                    ) : (
+                      <>
+                        โปรดติดต่อ คุณ<span className="text-foreground font-medium">อรพรรณ เต็มเจียร</span> (คุณ<span className="text-foreground font-medium">เจี๊ยบ</span>) และคุณ<span className="text-foreground font-medium">ณธิดา</span> (บุตรสาว)
+                      </>
+                    )}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground/60 italic leading-snug">
+                    {lang === 'en' 
+                      ? "She will communicate and manage all discussions directly on behalf of the estate." 
+                      : "คุณเจี๊ยบจะเป็นผู้สื่อสารประสานงานหลักเพื่อจัดแจงข้อตกลงและรายละเอียดอย่างเป็นกันเอง"
+                    }
+                  </p>
+                </div>
+
+                <div className="space-y-2 bg-surface p-5 border border-border">
+                  <p className="font-semibold text-foreground flex items-center gap-2 text-[13px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    {lang === 'en' ? "Technical Lead & Web Developer:" : "ผู้ดูแลการพัฒนาและสถาปัตยกรรมดิจิทัล:"}
+                  </p>
+                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                    {lang === 'en' ? (
+                      <>
+                        She will communicate directly with Web Designer & Developer <span className="text-accent font-semibold">Mr. Walizen</span>.
+                      </>
+                    ) : (
+                      <>
+                        จะทำการสื่อสารและวางแผนจัดส่งมอบระบบโดยตรงกับทางทีมงานวิศวกรนักพัฒนาเว็บ คุณ<span className="text-accent font-semibold">วาริเซน (Mr. Walizen)</span>
+                      </>
+                    )}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground/60 italic leading-snug">
+                    {lang === 'en'
+                      ? "A custom, fully-scalable, high-speed solution tailored to Trat's community landscape."
+                      : "สถาปัตยกรรมแอปพลิเคชันรูปแบบพรีเมียม เพื่อตอบโจทย์ธุรกิจนำเที่ยวและพักอาศัยของเมืองตราด"
+                    }
+                  </p>
+                </div>
+              </div>
+
+              {/* Developer Note & Condition */}
+              <div className="mt-6 bg-surface/40 border border-accent/20 p-5 font-sans relative">
+                <div className="absolute top-3 right-3 text-[9px] font-mono tracking-widest text-accent uppercase font-semibold">
+                  {lang === 'en' ? "Developer's Note" : "หมายเหตุจากผู้พัฒนา"}
+                </div>
+                <h4 className="font-serif text-sm italic font-semibold text-foreground mb-3">
+                  {lang === 'en' ? "A Sincere Thank You & Work Conditions" : "คำขอบคุณและการร่วมมือพัฒนาเพื่อความสำเร็จ"}
+                </h4>
+                <div className="space-y-3 text-xs leading-relaxed text-muted-foreground">
+                  <p>
+                    {lang === 'en' ? (
+                      <>
+                        We deeply thank you for hosting us so generously this far. Now, with this project, we can achieve far more than just breaking even—we can unlock a new level of online visibility and consistent profitability for SK Hotel together.
+                      </>
+                    ) : (
+                      <>
+                        ทางผู้พัฒนาระบบขอขอบพระคุณเป็นอย่างยิ่งสำหรับการดูแลต้อนรับอย่างอบอุ่นและเอื้อเฟื้อที่พักให้กับเราตลอดเวลาที่ผ่านมา และด้วยความร่วมมือพัฒนาโครงการระบบนี้ เราจะช่วยนำพาให้ SK Hotel ก้าวไกลสร้างรายได้เสริมที่มากกว่าจุดคุ้มทุนอย่างแน่นอนครับ
+                      </>
+                    )}
+                  </p>
+                  <p className="border-t border-accent/10 pt-3 text-[11px] italic bg-accent/5 px-3 py-2 text-foreground">
+                    {lang === 'en' ? (
+                      <>
+                        <strong>Project Requirement:</strong> To complete this custom design and development successfully on time for you and Gemini, I will need <span className="text-accent font-medium">a clean, big room with good, comfortable facilities</span>. Having a clean and suitable work environment will allow me to write code, design the interfaces, and deploy the entire solution within our target schedule.
+                      </>
+                    ) : (
+                      <>
+                        <strong>เงื่อนไขการทำงาน:</strong> เพื่อให้สามารถเขียนโปรแกรม ออกแบบ และเปิดตัวแพลตฟอร์มนี้ได้อย่างราบรื่นและตรงเวลาสำหรับท่านและทีมงาน Gemini ผู้พัฒนาจำเป็นต้อง <span className="text-accent font-medium">ขอความอนุเคราะห์ห้องพักที่มีความกว้างขวาง สะอาดสะอ้าน และมีสิ่งอำนวยความสะดวกที่ดีเหมาะสมสำหรับการทำงาน</span> เพื่อสมาธิและความรวดเร็วในการส่งมอบงานทั้งหมดตามกำหนดครับ
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* PROJECT TIMELINE (3 Weeks plan) */}
