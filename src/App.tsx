@@ -16,6 +16,7 @@ import LocationSection from './components/LocationSection';
 import BookCTA from './components/BookCTA';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
+import ThaiScrollEffects from './components/ThaiScrollEffects';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -52,6 +53,9 @@ export default function App() {
   return (
     <div className="bg-background text-foreground selection:bg-accent selection:text-background min-h-screen flex flex-col justify-between" id="app-root">
       
+      {/* Thai Scroll Colors, Traditional Ornaments & Ambient Soundscape */}
+      <ThaiScrollEffects />
+
       {/* Navigation */}
       <Navbar
         lang={lang}
