@@ -666,25 +666,27 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
             {lang === 'en' ? "Direct Contact" : "ช่องทางติดต่อตรง"}
           </div>
           
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
-            <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent shrink-0">
-              <UserCheck className="w-8 h-8" />
-            </div>
-            
-            <div className="space-y-4 flex-1">
-              <div>
-                <span className="label-caps text-accent text-[9px] tracking-wider block mb-1">
-                  {lang === 'en' ? "How to Pursue This Offer" : "วิธีการติดต่อร่วมงานสำหรับโครงการนี้"}
-                </span>
-                <h3 className="font-serif text-xl md:text-2xl italic font-bold text-foreground">
-                  {lang === 'en' 
-                    ? "Connect Directly with the Owners & Developer" 
-                    : "ช่องทางการประสานงานตรงระหว่างทีมผู้บริหารและนักพัฒนาเว็บ"
-                  }
-                </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 relative z-10 items-stretch">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+              <div className="flex gap-4 items-start">
+                <div className="w-12 h-12 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent shrink-0 mt-1">
+                  <UserCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="label-caps text-accent text-[9px] tracking-wider block mb-1">
+                    {lang === 'en' ? "How to Pursue This Offer" : "วิธีการติดต่อร่วมงานสำหรับโครงการนี้"}
+                  </span>
+                  <h3 className="font-serif text-xl md:text-2xl italic font-bold text-foreground">
+                    {lang === 'en' 
+                      ? "Connect Directly with the Owners & Developer" 
+                      : "ช่องทางการประสานงานตรงระหว่างทีมผู้บริหารและนักพัฒนาเว็บ"
+                    }
+                  </h3>
+                </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed font-sans">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed font-sans">
                 <div className="space-y-2 bg-surface p-5 border border-border">
                   <p className="font-semibold text-foreground flex items-center gap-2 text-[13px]">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
@@ -709,33 +711,51 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
                   </p>
                 </div>
 
-                <div className="space-y-2 bg-surface p-5 border border-border">
-                  <p className="font-semibold text-foreground flex items-center gap-2 text-[13px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    {lang === 'en' ? "Technical Lead & Web Developer:" : "ผู้ดูแลการพัฒนาและสถาปัตยกรรมดิจิทัล:"}
-                  </p>
-                  <p className="text-muted-foreground text-[11px] leading-relaxed">
-                    {lang === 'en' ? (
-                      <>
-                        She will communicate directly with Web Designer & Developer <span className="text-accent font-semibold">Mr. Walizen</span>.
-                      </>
-                    ) : (
-                      <>
-                        จะทำการสื่อสารและวางแผนจัดส่งมอบระบบโดยตรงกับทางทีมงานวิศวกรนักพัฒนาเว็บ คุณ<span className="text-accent font-semibold">วาริเซน (Mr. Walizen)</span>
-                      </>
-                    )}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground/60 italic leading-snug">
-                    {lang === 'en'
-                      ? "A custom, fully-scalable, high-speed solution tailored to Trat's community landscape."
-                      : "สถาปัตยกรรมแอปพลิเคชันรูปแบบพรีเมียม เพื่อตอบโจทย์ธุรกิจนำเที่ยวและพักอาศัยของเมืองตราด"
-                    }
-                  </p>
+                <div className="space-y-2 bg-surface p-5 border border-border flex flex-col justify-between">
+                  <div>
+                    <p className="font-semibold text-foreground flex items-center gap-2 text-[13px]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                      {lang === 'en' ? "Technical Lead & Web Developer:" : "ผู้ดูแลการพัฒนาและสถาปัตยกรรมดิจิทัล:"}
+                    </p>
+                    <p className="text-muted-foreground text-[11px] leading-relaxed mt-2">
+                      {lang === 'en' ? (
+                        <>
+                          She will communicate directly with Web Designer & Developer <span className="text-accent font-semibold">Mr. Walizen</span>.
+                        </>
+                      ) : (
+                        <>
+                          จะทำการสื่อสารและวางแผนจัดส่งมอบระบบโดยตรงกับทางทีมงานวิศวกรนักพัฒนาเว็บ คุณ<span className="text-accent font-semibold">วาริเซน (Mr. Walizen)</span>
+                        </>
+                      )}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground/60 italic leading-snug mt-1">
+                      {lang === 'en'
+                        ? "A custom, fully-scalable, high-speed solution tailored to Trat's community landscape."
+                        : "สถาปัตยกรรมแอปพลิเคชันรูปแบบพรีเมียม เพื่อตอบโจทย์ธุรกิจนำเที่ยวและพักอาศัยของเมืองตราด"
+                      }
+                    </p>
+                  </div>
+
+                  {/* Developer Profile Card */}
+                  <div className="mt-4 pt-3 border-t border-border/60 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full overflow-hidden border border-accent/40 shrink-0">
+                      <img 
+                        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=150&h=150&q=80"
+                        alt="Mr. Walizen - Lead Web Developer"
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h5 className="font-serif text-[11px] font-bold text-foreground italic">Mr. Walizen</h5>
+                      <p className="text-[9px] text-accent uppercase tracking-wider font-mono">Lead Web Developer</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Developer Note & Condition */}
-              <div className="mt-6 bg-surface/40 border border-accent/20 p-5 font-sans relative">
+              <div className="bg-surface/40 border border-accent/20 p-5 font-sans relative">
                 <div className="absolute top-3 right-3 text-[9px] font-mono tracking-widest text-accent uppercase font-semibold">
                   {lang === 'en' ? "Developer's Note" : "หมายเหตุจากผู้พัฒนา"}
                 </div>
@@ -757,15 +777,46 @@ export default function PitchSection({ lang, setLang }: PitchSectionProps) {
                   <p className="border-t border-accent/10 pt-3 text-[11px] italic bg-accent/5 px-3 py-2 text-foreground">
                     {lang === 'en' ? (
                       <>
-                        <strong>Project Requirement:</strong> To complete this custom design and development successfully on time for you and Gemini, I will need <span className="text-accent font-medium">a clean, big room with good, comfortable facilities</span>. Having a clean and suitable work environment will allow me to write code, design the interfaces, and deploy the entire solution within our target schedule.
+                        <strong>Project Requirement:</strong> To complete this custom design and development successfully on time for you, I will need <span className="text-accent font-medium">a clean, big room with good, comfortable facilities</span>. Having a clean and suitable work environment will allow me to write code, design the interfaces, and deploy the entire solution within our target schedule.
                       </>
                     ) : (
                       <>
-                        <strong>เงื่อนไขการทำงาน:</strong> เพื่อให้สามารถเขียนโปรแกรม ออกแบบ และเปิดตัวแพลตฟอร์มนี้ได้อย่างราบรื่นและตรงเวลาสำหรับท่านและทีมงาน Gemini ผู้พัฒนาจำเป็นต้อง <span className="text-accent font-medium">ขอความอนุเคราะห์ห้องพักที่มีความกว้างขวาง สะอาดสะอ้าน และมีสิ่งอำนวยความสะดวกที่ดีเหมาะสมสำหรับการทำงาน</span> เพื่อสมาธิและความรวดเร็วในการส่งมอบงานทั้งหมดตามกำหนดครับ
+                        <strong>เงื่อนไขการทำงาน:</strong> เพื่อให้สามารถเขียนโปรแกรม ออกแบบ และเปิดตัวแพลตฟอร์มนี้ได้อย่างราบรื่นและตรงเวลาสำหรับท่าน ผู้พัฒนาจำเป็นต้อง <span className="text-accent font-medium">ขอความอนุเคราะห์ห้องพักที่มีความกว้างขวาง สะอาดสะอ้าน และมีสิ่งอำนวยความสะดวกที่ดีเหมาะสมสำหรับการทำงาน</span> เพื่อสมาธิและความรวดเร็วในการส่งมอบงานทั้งหมดตามกำหนดครับ
                       </>
                     )}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* Right Image Column: Thai Welcoming Smile */}
+            <div className="lg:col-span-5 flex flex-col justify-between border border-accent/20 bg-surface/30 p-4 relative overflow-hidden group">
+              <div className="relative w-full h-[250px] lg:h-full min-h-[240px] overflow-hidden border border-border">
+                <img 
+                  src="https://images.pexels.com/photos/31503124/pexels-photo-31503124.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  alt="Serene Buddha Statue - Land of Smiles"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                  <span className="font-serif text-[10px] tracking-wide text-background bg-accent px-2.5 py-0.5 font-semibold uppercase">
+                    {lang === 'en' ? "Land of Smiles" : "สยามเมืองยิ้ม"}
+                  </span>
+                  <span className="font-mono text-[8px] text-background/80">SK Hotel Proposal</span>
+                </div>
+              </div>
+              <div className="mt-4 space-y-1 bg-background/50 p-4 border border-border/40">
+                <p className="font-serif text-xs italic font-semibold text-foreground flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block animate-pulse" />
+                  {lang === 'en' ? "The Essence of Hospitality" : "หัวใจหลักแห่งการต้อนรับอบอุ่น"}
+                </p>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  {lang === 'en' 
+                    ? "Our custom digital strategy is designed around the core essence of Thai warmth. Greeting global guests with a sincere smile is the most valuable luxury SK Hotel offers." 
+                    : "แผนพัฒนาดิจิทัลของเราถูกออกแบบมาเพื่อส่งเสริมเอกลักษณ์ความโอบอ้อมอารีของไทย เพราะรอยยิ้มและการบริการด้วยใจคือสิ่งล้ำค่าที่สุดที่ผู้เข้าพักจะได้รับจาก SK Hotel"
+                  }
+                </p>
               </div>
             </div>
           </div>
